@@ -1,5 +1,5 @@
+"use client"
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 
 function Alert() {
   const [open, setOpen] = useState(true);
@@ -33,23 +33,23 @@ function Alert() {
           <p className="text-sm text-gray-500">Sign up or login to continue</p>
 
           <div className="mt-4 flex w-full flex-col gap-3">
-            <Link
-              to="/signup"
+            <a
+              href="/signup"
               onClick={() => setOpen(false)}
               className="w-full rounded-lg border border-transparent px-4 py-3 text-sm font-medium transition-shadow hover:shadow-md bg-blue-500 text-white"
             >
               Sign Up
-            </Link>
+            </a>
           </div>
 
           <div className="mt-4 flex w-full flex-col gap-3">
-            <Link
-              to="/login"
+            <a
+              href="/login"
               onClick={() => setOpen(false)} // ✅ Close alert on navigation
               className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm font-medium bg-gray-50 hover:bg-gray-100"
             >
               Login
-            </Link>
+            </a>
           </div>
 
           <small className="mt-2 text-xs text-gray-400">

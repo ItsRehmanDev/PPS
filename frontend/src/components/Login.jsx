@@ -1,15 +1,18 @@
+"use client"
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 
-const Login = ({ onLoginSuccess, onSwitchToSignup }) => {
+const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter();
 
   // ✅ Backend-based login
   const handleLogin = async (e) => {
     e.preventDefault();
 
     try {
-      const res = await fetch("http://localhost:8080/login", {
+      const res = await fetch("/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -20,7 +23,7 @@ const Login = ({ onLoginSuccess, onSwitchToSignup }) => {
       if (res.ok) {
         alert("✅ Login successful!");
         localStorage.setItem("isLoggedIn", true);
-        if (onLoginSuccess) onLoginSuccess();
+        router.push("/");
       } else {
         alert("❌ " + data.message);
       }
@@ -30,7 +33,7 @@ const Login = ({ onLoginSuccess, onSwitchToSignup }) => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-900 via-indigo-900 to-black">
+  <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-900 via-indigo-900 to-black">
       <div className="backdrop-blur-md bg-white/10 border border-white/20 shadow-2xl rounded-2xl p-8 w-full max-w-md text-center text-gray-100 transition-all duration-300 hover:scale-[1.02]">
         {/* Heading */}
         <h2 className="text-3xl font-bold mb-3 text-white">Welcome Back 👋</h2>
@@ -85,13 +88,13 @@ const Login = ({ onLoginSuccess, onSwitchToSignup }) => {
 
         {/* Switch to Signup */}
         <p className="text-sm text-gray-300 mt-6">
-          Don’t have an account?{" "}
-          <button
-            onClick={onSwitchToSignup}
+          Don't have an account?{" "}
+          <a
+            href="/signup"
             className="text-indigo-400 hover:text-indigo-300 font-medium hover:underline"
           >
-            <a href="/signup">Create one</a>
-          </button>
+            Create one
+          </a>
         </p>
       </div>
     </div>

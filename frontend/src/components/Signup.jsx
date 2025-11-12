@@ -1,12 +1,13 @@
+"use client"
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 
 const Signup = () => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const navigate = useNavigate();
+  const router = useRouter();
   // ✅ Signup logic (backend version)
   const handleSignup = async (e) => {
     e.preventDefault();
@@ -17,17 +18,17 @@ const Signup = () => {
     }
 
     try {
-      const res = await fetch("http://localhost:8080/signup", {
+      const res = await fetch("/api/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password }),
+        body: JSON.stringify({ name: fullName, email, password }),
       });
 
       const data = await res.json();
 
       if (res.ok) {
         alert("✅ Signup successful!");
-        navigate("/login");
+        router.push("/login");
       } else {
         alert("❌ " + data.message);
       }
@@ -37,7 +38,7 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-900 via-indigo-900 to-black">
+  <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-900 via-indigo-900 to-black">
       {/* Card */}
       <div className="backdrop-blur-md bg-white/10 border border-white/20 shadow-2xl rounded-2xl p-8 w-full max-w-md text-center text-gray-100 transition-all duration-300 hover:scale-[1.02]">
         {/* Logo / Heading */}
@@ -111,9 +112,9 @@ const Signup = () => {
 
         {/* Divider */}
         <div className="flex items-center my-6">
-          <hr className="flex-grow border-gray-500" />
+          <hr className="grow border-gray-500" />
           <span className="px-2 text-gray-300 text-sm">or continue with</span>
-          <hr className="flex-grow border-gray-500" />
+          <hr className="grow border-gray-500" />
         </div>
 
         {/* Social Logins */}
@@ -141,12 +142,12 @@ const Signup = () => {
         {/* Redirect to Login */}
         <p className="text-sm text-gray-300">
           Already have an account?{" "}
-          <Link
-            to="/login"
+          <a
+            href="/login"
             className="text-indigo-400 hover:text-indigo-300 font-medium hover:underline"
           >
             Sign in
-          </Link>
+          </a>
         </p>
       </div>
     </div>
